@@ -1,0 +1,59 @@
+/* Orb Styling */
+.orb {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+}
+
+.animate_orb {
+    animation: wave 0.4s infinite ease-in-out;
+}
+
+.animate_orb_slow {
+    animation: wave 2s infinite ease-in-out;
+}
+
+.orb_active {
+    background: radial-gradient(circle at center, #b5b5ff,#7f7df0,#4a46ff);
+}
+
+.orb_inactive {
+    background: radial-gradient(circle at center, #c7c7c7, #908e8e, #595959);
+}
+
+/* Inner Gradient Layer for Waving Effect */
+.orb::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+
+    border-radius: 50%;
+    animation: wave-motion 6s infinite linear;
+}
+
+/* Keyframes for Waving Animation */
+@keyframes wave {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes wave-motion {
+    0% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+    50% {
+        transform: translate(10px, 10px) rotate(180deg);
+    }
+    100% {
+        transform: translate(0, 0) rotate(360deg);
+    }
+}
