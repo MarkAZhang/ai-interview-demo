@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import orb_styles from './orb.module.css'
 
-export function Conversation() {
+export function Conversation({ candidateName }: { candidateName: string }) {
   const conversation = useConversation({
     onConnect: () => console.log('Connected'),
     onDisconnect: () => console.log('Disconnected'),
@@ -25,12 +25,12 @@ export function Conversation() {
       await conversation.startSession({
         connectionType: 'websocket', // or 'polling'
         agentId: 'agent_6201k46903t8ff5r9n967b0psvn0',
-        dynamicVariables: { company: 'Mavi', candidate: 'Molly Liu' }
+        dynamicVariables: { company: 'Mavi', candidate: candidateName }
       })
     } catch (error) {
       console.error('Failed to start conversation:', error)
     }
-  }, [conversation])
+  }, [conversation, candidateName])
 
   const stopConversation = useCallback(async () => {
     await conversation.endSession()

@@ -1,5 +1,9 @@
+'use client'
+
 import { Conversation } from '@/components/conversation'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { Suspense } from 'react'
 
 const Header = ({ candidateName }: { candidateName: string }) => {
   return (
@@ -22,12 +26,28 @@ const Header = ({ candidateName }: { candidateName: string }) => {
   )
 }
 
-export default function Home() {
-  const candidateName = 'Mark Zhang'
+function HomeContent() {
+  const searchParams = useSearchParams()
+  const candidateName = searchParams.get('candidate')
+
+  if (!candidateName) {
+    throw new Error('no candidate name provided')
+  }
+
+  const decodedCandidateName = decodeURIComponent(candidateName)
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center pb-12">
-      <Header candidateName={candidateName} />
-      <Conversation />
+      <Header candidateName={decodedCandidateName} />
+      <Conversation candidateName={decodedCandidateName} />
     </main>
+  )
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <HomeContent />
+    </Suspense>
   )
 }
